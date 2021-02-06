@@ -39,35 +39,11 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-optimized-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Install packages (Windows)
-        if: matrix.os == 'windows-latest'
-        uses: crazy-max/ghaction-chocolatey@v1.4.0
-        with:
-          args: install -y zip
-
       - name: Install packages (macOS)
         if: matrix.os == 'macos-latest'
         shell: bash
         run: |
           brew install coreutils
-
-      - name: Archive release assets (Windows)
-        id: archive_release_assets_windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          cp target/release/${{ matrix.artifact_name }} ${{ matrix.artifact_name }}
-          cp assets/git-diffsitter ./git-diffsitter
-          zip -r ${{ matrix.asset_name }}${{ matrix.archive_ext }} ${{ matrix.artifact_name }} git-diffsitter
-
-      - name: Archive release assets
-        if: matrix.os != 'windows-latest'
-        id: archive_release_assets_unix_like
-        shell: bash
-        run: |
-          mkdir -p ${{ matrix.asset_name }}
-          cp target/release/${{ matrix.artifact_name }} ${{ matrix.asset_name }}
-          cp assets/git-diffsitter ${{ matrix.asset_name }}
-          tar -czvf ${{ matrix.asset_name }}${{ matrix.archive_ext }} ${{ matrix.asset_name }}
 
       - name: Generate SHA256 checksum for binary
         if: matrix.os != 'windows-latest'
