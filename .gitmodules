@@ -61,3 +61,6 @@
 [submodule "grammars/tree-sitter-ruby"]
 	path = grammars/tree-sitter-ruby
 	url = https://github.com/afnanenayet/tree-sitter-ruby.git
+[submodule "grammars/tree-sitter-solidity"]
+	path = grammars/tree-sitter-solidity
+	url = https://github.com/JoranHonig/tree-sitter-solidity
